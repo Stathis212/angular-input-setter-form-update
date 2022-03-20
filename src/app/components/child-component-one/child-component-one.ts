@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BasicData } from '../core/models/basic-data.model';
+import { BasicData } from '../../core/models/basic-data.model';
 
 @Component({
   selector: 'child-component-one',
