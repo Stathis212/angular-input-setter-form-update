@@ -1,6 +1,17 @@
-<h3>Child Form</h3>
-<div [formGroup]="form">
+<h3>Child Form One</h3>
+<!-- <div [formGroup]="form">
   <input formControlName="id" />
   <input formControlName="name" />
-</div>
+</div> -->
 <pre>Child form value: {{form.value | json}}</pre>
+
+<h4>Uses input setter to patch basic form data:</h4>
+
+<pre>
+{{"@Input() public set parentData(data: BasicData) {
+  this.existingData = data;
+  if (this.form && data) {
+    this.form.patchValue(data);
+  }
+}"}}
+</pre>

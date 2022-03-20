@@ -8,21 +8,20 @@ import { BasicData } from '../../core/models/basic-data.model';
   templateUrl: './child-component-two.html',
 })
 export class ChildComponentTwo implements OnInit {
-  @Input() public set parentDataId(id: number) {
-    this.parentDataId$.next(id);
+  @Input() public set parentData(data: BasicData) {
+    this.parentData$.next(data);
   }
 
-  @Input() public set parentDataName(name: string) {
-    this.parentDataName$.next(name);
+  @Input() public set parentDataMiddleName(name: string) {
+    this.parentDataMiddleName$.next(name);
   }
 
   public existingData: BasicData;
   public form: FormGroup;
 
-  private parentDataId$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    null
-  );
-  private parentDataName$: BehaviorSubject<string> =
+  private parentData$: BehaviorSubject<BasicData> =
+    new BehaviorSubject<BasicData>(null);
+  private parentDataMiddleName$: BehaviorSubject<string> =
     new BehaviorSubject<string>(null);
 
   constructor(private fb: FormBuilder) {}
@@ -36,15 +35,16 @@ export class ChildComponentTwo implements OnInit {
     this.form = this.fb.group({
       id: this.existingData?.id || null,
       name: this.existingData?.name || '',
+      middleName: '',
     });
   }
 
   private subscribeToParentDataChanges(): void {
-    combineLatest([this.parentDataId$, this.parentDataName$]).subscribe(
-      ([parentId, parentName]: [number, string]) => {
+    combineLatest([this.parentData$, this.parentDataMiddleName$]).subscribe(
+      ([parentData, parentMiddleName]: [BasicData, string]) => {
         this.form.patchValue({
-          id: parentId,
-          name: parentName,
+          ...parentData,
+          middleName: parentMiddleName || '',
         });
       }
     );

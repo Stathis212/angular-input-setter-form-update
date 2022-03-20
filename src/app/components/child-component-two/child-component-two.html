@@ -1,6 +1,31 @@
-<h3>Child Form</h3>
-<div [formGroup]="form">
+<h3>Child Form Two</h3>
+<!-- <div [formGroup]="form">
   <input formControlName="id" />
+  <input formControlName="middleName" />
   <input formControlName="name" />
-</div>
+</div> -->
 <pre>Child form value: {{form.value | json}}</pre>
+
+<h4>
+  Uses input setters with BahaviorSubjects to combineLatest basic & secondary
+  form data:
+</h4>
+
+<pre>
+{{"@Input() public set parentData(data: BasicData) {
+  this.parentData$.next(data);
+}
+
+@Input() public set parentDataMiddleName(name: string) {
+  this.parentDataMiddleName$.next(name);
+}}
+
+combineLatest([this.parentData$, this.parentDataMiddleName$]).subscribe(
+      ([parentData, parentMiddleName]: [BasicData, string]) => {
+        this.form.patchValue({
+          ...parentData,
+          middleName: parentMiddleName,
+        });
+      }
+    );"}}
+</pre>

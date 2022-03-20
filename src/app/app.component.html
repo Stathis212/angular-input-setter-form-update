@@ -1,18 +1,26 @@
-<h2>Set Initial Entity Data in parent form below:</h2>
+<h2>Set basic entity data in parent form below:</h2>
 <div [formGroup]="parentForm">
   <input formControlName="id" />
   <input formControlName="name" />
 </div>
+<hr />
 <p>
-  When data is updated, child component form should be patched in corresponding
-  values
+  When basic data is updated in parent form, child component form should be
+  patched in corresponding values
 </p>
-<child-component-one [parentData]="parentForm.value"></child-component-one>
+<child-component-one [parentData]="basicFormData"> </child-component-one>
+<hr />
+<h2>Set middle name in secondary parent form below:</h2>
+<div [formGroup]="parentSecondaryForm">
+  <input formControlName="middleName" />
+</div>
+<hr />
 <p>
-  When data is updated, child component form should be patched only whehn both
-  values change
+  When either parent form data is updated, <br />child component form (merge
+  from both parent form data) <br />should be patched with both parent forms
+  data
 </p>
 <child-component-two
-  [parentDataId]="parentForm.value.id"
-  [parentDataName]="parentForm.value.id"
+  [parentData]="basicFormData"
+  [parentDataMiddleName]="middleNameData"
 ></child-component-two>

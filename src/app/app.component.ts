@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { BasicData } from './core/models/basic-data.model';
@@ -10,7 +10,9 @@ import { BasicData } from './core/models/basic-data.model';
 })
 export class AppComponent {
   public basicFormData: BasicData;
+  public middleNameData: string;
   public parentForm: FormGroup;
+  public parentSecondaryForm: FormGroup;
 
   private subscription: Subscription = new Subscription();
 
@@ -23,7 +25,9 @@ export class AppComponent {
     };
 
     this.buildParentForm();
-    this.subscribeToFormChanges();
+    this.subscribeToParentFormChanges();
+    this.buildParentSecondaryForm();
+    this.subscribeToSecondaryParentFormChanges();
   }
 
   public ngOnDestroy(): void {
@@ -37,11 +41,27 @@ export class AppComponent {
     });
   }
 
-  private subscribeToFormChanges(): void {
-    this.subscription = this.parentForm.valueChanges.subscribe(
-      (value: BasicData) => {
+  private buildParentSecondaryForm(): void {
+    this.parentSecondaryForm = this.fb.group({
+      middleName: null,
+    });
+  }
+
+  private subscribeToParentFormChanges(): void {
+    this.subscription.add(
+      this.parentForm.valueChanges.subscribe((value: BasicData) => {
         this.basicFormData = value;
-      }
+      })
+    );
+  }
+
+  private subscribeToSecondaryParentFormChanges(): void {
+    this.subscription.add(
+      this.parentSecondaryForm.valueChanges.subscribe(
+        (value: { middleName: string }) => {
+          this.middleNameData = value.middleName;
+        }
+      )
     );
   }
 }
