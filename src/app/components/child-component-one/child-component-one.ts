@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BasicData } from '../core/models/basic-data.model';
 
@@ -6,15 +6,15 @@ import { BasicData } from '../core/models/basic-data.model';
   selector: 'child-component-one',
   templateUrl: './child-component-one.html',
 })
-export class ChildComponentOne {
+export class ChildComponentOne implements OnInit {
   @Input() public set parentData(data: BasicData) {
-    this.initialData = data;
-    if (data) {
+    this.existingData = data;
+    if (this.form && data) {
       this.form.patchValue(data);
     }
   }
 
-  public initialData: BasicData;
+  public existingData: BasicData;
   public form: FormGroup;
 
   constructor(private fb: FormBuilder) {}
@@ -25,8 +25,8 @@ export class ChildComponentOne {
 
   private buildForm(): void {
     this.form = this.fb.group({
-      id: this.initialData?.id || null,
-      name: this.initialData?.name || '',
+      id: this.existingData?.id || null,
+      name: this.existingData?.name || '',
     });
   }
 }

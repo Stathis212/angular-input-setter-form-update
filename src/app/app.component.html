@@ -1,2 +1,10 @@
-<child-component-one [parentData]="basicFormData"></child-component-one>
-<p>When data is not empty, form value will update</p>
+<h2>Set Initial Entity Data in parent form below:</h2>
+<div [formGroup]="parentForm">
+  <input formControlName="id" />
+  <input formControlName="name" />
+</div>
+<p>
+  When data is updated, child component form should be patched in corresponding
+  values
+</p>
+<child-component-one [parentData]="parentForm.value"></child-component-one>
