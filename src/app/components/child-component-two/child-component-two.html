@@ -1,0 +1,6 @@
+<h3>Child Form</h3>
+<div [formGroup]="form">
+  <input formControlName="id" />
+  <input formControlName="name" />
+</div>
+<pre>Child form value: {{form.value | json}}</pre>

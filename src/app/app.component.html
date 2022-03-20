@@ -8,3 +8,11 @@
   values
 </p>
 <child-component-one [parentData]="parentForm.value"></child-component-one>
+<p>
+  When data is updated, child component form should be patched only whehn both
+  values change
+</p>
+<child-component-two
+  [parentDataId]="parentForm.value.id"
+  [parentDataName]="parentForm.value.id"
+></child-component-two>
